@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MLFD Engineering Sheet, {{ engine }}</title>
+    <link rel="stylesheet" href="../static/styles.css">
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+</head>
+<body>
+    <h1>Engineering Sheet - {{ engine }}</h1>
+    <!-- Hamburger menu -->
+    <div class="hamburger-menu" id="hamburgerMenu">
+        <div class="hamburger-icon">
+            <div class="hamburger-line"></div>
+            <div class="hamburger-line"></div>
+            <div class="hamburger-line"></div>
+        </div>
+    </div>
+
+    <!-- <div class="add-item-popup" id="addItemPopup">
+        <h2>Add Item</h2>
+        <button class="close-button" id="closeAddItemPopup">&times;</button>
+        <form action="/add_item" method="POST">
+            <label for="section">Section:</label>
+            <select id="section" name="section" required>
+                <option value="" disabled selected>Select Section</option>
+                {% for section, items in checklist_items.items() %}
+                    <option value="{{ section }}">{{ section }}</option>
+                {% endfor %}
+            </select>
+            <label for="item_name">Item:</label>
+            <input type="text" id="item_name" name="item_name" placeholder="New Item" required>
+            <label for="correct_quantity">Correct Quantity:</label>
+            <input type="text" id="correct_quantity" name="correct_quantity" placeholder="Quantity" required>
+            <button type="submit">Add Item</button>
+        </form>
+    </div> -->
+
+    <!-- <div class="remove-item-popup" id="removeItemPopup">
+        <h2>Remove Item</h2>
+        <button class="close-button" id="closeRemoveItemPopup">&times;</button>
+        <form action="/remove_item" method="POST">
+            <label for="remove_section">Section:</label>
+            <select id="remove_section" name="remove_section" required onchange="updateItemsToRemove()">
+                <option value="" disabled selected>Select Section</option>
+                {% for section, items in checklist_items.items() %}
+                    <option value="{{ section }}">{{ section }}</option>
+                {% endfor %}
+            </select>
+            <label for="item_to_remove">Item to Remove:</label>
+            <select id="item_to_remove" name="item_to_remove" required>
+                <option value="" disabled selected>Select Item to Remove</option>
+            </select>
+            <button type="submit">Remove Item</button>
+        </form>
+    </div> -->
+
+    <!-- <div class="move-item-popup" id="moveItemPopup">
+        <h2>Move Item</h2>
+        <button class="close-button" id="closeMoveItemPopup">&times;</button>
+        <form action="/move_item" method="POST">
+            <label for="previous_category">From Section:</label>
+            <select id="previous_category" name="previous_category" required onchange="updateItemsToMove()">
+                <option value="" disabled selected>Select Previous Section</option>
+                {% for section, items in checklist_items.items() %}
+                    <option value="{{ section }}">{{ section }}</option>
+                {% endfor %}
+            </select>
+            <label for="item_to_move">Item to Move:</label>
+            <select id="item_to_move" name="item_to_move" required>
+                <option value="" disabled selected>Select Item to Move</option>
+            </select>
+            <label for="new_category">To Section:</label>
+            <select id="new_category" name="new_category" required onchange="updateNewCategory()">
+                <option value="" disabled selected>Select New Section</option>
+            </select>
+            <button type="submit">Move Item</button>
+        </form>
+    </div> -->
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-content">
+            <!-- Don't Need These For Now
+            <a href="#" id="addItemOption">Add Item</a>
+            <a href="#" id="removeItemOption">Remove Item</a>
+            <a href="#" id="moveItemOption">Move Item</a> -->
+            <a href="/exit_engineering_sheet" id="dashboardOption">Exit Engineering Sheet</a>
+            {% if oon %}
+                <a href="/terminate_sheet" id="confirmationPopupOption">Terminate Sheet</a>
+            {% endif %}
+            <a href="/logout" id="logOutOption">Log Out</a>
+        </div>
+    </div>
+
+    <!-- <ul class="checklist">
+        {% for section, items in checklist_items.items() %}
+            <li class="section"><strong>{{ section }}</strong></li>
+            {% for item in items %}
+                <li class="item">
+                    <input class="checklist_items" type="checkbox" name="checked_items_{{ section }}_{{ item.item_name }}" 
+       {% if item.checked %}checked{% endif %} onchange="updateCheckbox('{{ section }}', '{{ item.item_name }}', this.checked)">
+
+                    
+                    <div class="quantity-controls">
+                        <input method="POST" class="quantity-input" type="number"
+                            data-section="{{ section }}" 
+                            data-item-name="{{ item.item_name }}" 
+                            id="user_quantity_{{ section }}_{{ item.item_name }}" 
+                            name="user_quantity_{{ section }}_{{ item.item_name }}" 
+                            value="{{ item.user_quantity }}" step="1" 
+                            min="0" 
+                            onchange="updateQuantity('{{ section }}', '{{ item.item_name }}', this.value)">
+                    </div>            
+                    
+                    <span class="correct-quantity">{{ item.correct_quantity }}</span>
+                    <label for="{{ section }}:{{ item.item_name }}">{{ item.item_name }}</label>
+                </li>
+            {% endfor %}
+        {% endfor %}
+    </ul> -->
+
+    <ul class="checklist">
+        {% for section, items in checklist_items.items() %}
+            <li class="section"><strong>{{ section }}</strong></li>
+            {% for item in items %}
+                <li class="item">
+                    <input class="checklist_items" type="checkbox" name="checked_items_{{ section }}_{{ item.item_name }}" 
+                        {% if item.checked %}checked{% endif %} 
+                        {% if item.checked_by and item.checked_by != session['initials'] %}disabled{% endif %} 
+                        onchange="updateCheckbox('{{ section }}', '{{ item.item_name }}', this.checked)">
+                    
+                    <div class="quantity-controls">
+                        <input method="POST" class="quantity-input" type="number"
+                            data-section="{{ section }}" 
+                            data-item-name="{{ item.item_name }}" 
+                            id="user_quantity_{{ section }}_{{ item.item_name }}" 
+                            name="user_quantity_{{ section }}_{{ item.item_name }}" 
+                            value="{{ item.user_quantity }}" step="1" 
+                            min="0" 
+                            {% if item.checked_by and item.checked_by != session['initials'] %}disabled{% endif %}
+                            onchange="updateQuantity('{{ section }}', '{{ item.item_name }}', this.value)">
+                    </div>
+                    
+                    <span class="correct-quantity">{{ item.correct_quantity }}</span>
+                    <label for="{{ section }}:{{ item.item_name }}">{{ item.item_name }}</label>
+                    <!-- {% if item.checked_by %}
+                        <span>(checked by: {{ item.checked_by }})</span>
+                    {% endif %} -->
+                </li>
+            {% endfor %}
+        {% endfor %}
+    </ul>
+
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script>
+        const socket = io();
+        const room = "{{ session['room'] }}";
+
+        socket.on('connect', () => {
+            socket.emit('join', {'username': '{{ session["user"] }}', 'room': room});
+        });
+
+        socket.on('status', (data) => {
+            console.log(data.msg);
+        });
+
+        socket.on('update_checklist', (data) => {
+            updateChecklistUI(data.checklist_items);
+        });
+
+        function updateChecklist(section, item_name, checked, newQuantity, checked_by) {
+            const updatedChecklistItems = {
+                ...session['checklist_items'],
+                [section]: session['checklist_items'][section].map(item => 
+                    item.item_name === item_name ? {...item, checked, user_quantity: newQuantity, checked_by: checked_by} : item
+                )
+            };
+
+            session['checklist_items'] = updatedChecklistItems;
+
+            socket.emit('update_checklist', {'room': room, 'checklist_items': updatedChecklistItems});
+        }
+
+        function fetchChecklistItems() {
+            fetch('/get_checklist_items')
+                .then(response => response.json())
+                .then(data => {
+                    updateChecklistUI(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching checklist items:', error);
+                });
+        }
+        
+        function updateChecklistUI(checklist_items) {
+            document.querySelectorAll('.checklist_items').forEach(checkbox => {
+                const section = checkbox.getAttribute('data-section');
+                const item_name = checkbox.getAttribute('data-item-name');
+                const item = checklist_items[section].find(i => i.item_name === item_name);
+                if (item) {
+                    checkbox.checked = item.checked;
+                    document.getElementById(`user_quantity_${section}_${item_name}`).value = item.user_quantity;
+                    if (item.checked_by && item.checked_by !== '{{ session["initials"] }}') {
+                        checkbox.disabled = true;
+                        document.getElementById(`user_quantity_${section}_${item_name}`).disabled = true;
+                    } else {
+                        checkbox.disabled = false;
+                        document.getElementById(`user_quantity_${section}_${item_name}`).disabled = false;
+                    }
+                }
+            });
+        }
+
+        // Fetch data initially when the page loads
+        fetchChecklistItems();
+
+        // Fetch data every 1 second (adjust the interval as needed)
+        setInterval(fetchChecklistItems, 1000);  // 1000 milliseconds (1 second)
+    
+        document.querySelectorAll('.checklist_items').forEach(checkbox => {
+            checkbox.addEventListener('change', (event) => {
+                const section = event.target.getAttribute('data-section');
+                const item_name = event.target.getAttribute('data-item-name');
+                const checked = event.target.checked;
+                const newQuantity = document.getElementById(`user_quantity_${section}_${item_name}`).value;
+                const checked_by = '{{ session["initials"] }}';
+                updateChecklist(section, item_name, checked, newQuantity, checked_by);
+            });
+        });
+    
+        document.querySelectorAll('.quantity-input').forEach(input => {
+            input.addEventListener('change', (event) => {
+                const section = event.target.getAttribute('data-section');
+                const item_name = event.target.getAttribute('data-item-name');
+                const newQuantity = event.target.value;
+                const checked = document.querySelector(`input[data-section="${section}"][data-item-name="${item_name}"]`).checked;
+                const checked_by = '{{ session["initials"] }}';
+                updateChecklist(section, item_name, checked, newQuantity, checked_by);
+            });
+        });
+    </script>
+    
+    <br>
+
+    <hr style="border: 2.5px solid #fff; margin: 20px 0;">
+
+    <br>
+    <form id="engineeringSheetForm" action="/submit_page" method="POST">
+        <label for="repair_orders">Repair Orders:</label><br>
+        <textarea id="repair_orders" placeholder="Repair orders..." name="repair_orders" rows="4" cols="50">{{ repair_orders }}</textarea><br><br>
+    </form>
+
+    <a href="/exit_engineering_sheet" class="submit-button">
+        <button id="generateTextFile" onclick="generateEngineeringSheet()">Submit Engineering Sheet</button>
+    </a>
+
+    <script>
+        const hamburgerMenu = document.getElementById('hamburgerMenu');
+        const sidebar = document.getElementById('sidebar');
+        // const addItemOption = document.getElementById('addItemOption');
+        // const removeItemOption = document.getElementById('removeItemOption');
+        // const moveItemOption = document.getElementById('moveItemOption');
+        // const closeAddItemPopupButton = document.getElementById('closeAddItemPopup');
+        // const closeRemoveItemPopupButton = document.getElementById('closeRemoveItemPopup');
+        // const closeMoveItemPopupButton = document.getElementById('closeMoveItemPopup');
+        // const addItemPopup = document.getElementById('addItemPopup');
+        // const removeItemPopup = document.getElementById('removeItemPopup');
+        // const moveItemPopup = document.getElementById('moveItemPopup');
+
+        // Function to toggle the sidebar
+        function toggleSidebar() {
+            sidebar.classList.toggle('show-sidebar');
+        }
+
+        // Event listeners
+        hamburgerMenu.addEventListener('click', toggleSidebar);
+        // addItemOption.addEventListener('click', () => {
+        //     addItemPopup.style.display = 'block';
+        //     removeItemPopup.style.display = 'none';
+        //     moveItemPopup.style.display = 'none';
+        //     sidebar.classList.remove('show-sidebar');
+        // });
+        // removeItemOption.addEventListener('click', () => {
+        //     removeItemPopup.style.display = 'block';
+        //     addItemPopup.style.display = 'none';
+        //     moveItemPopup.style.display = 'none';
+        //     sidebar.classList.remove('show-sidebar');
+        // });
+        // moveItemOption.addEventListener('click', () => {
+        //     moveItemPopup.style.display = 'block';
+        //     addItemPopup.style.display = 'none';
+        //     removeItemPopup.style.display = 'none';
+        //     sidebar.classList.remove('show-sidebar');
+        // });
+
+        // closeAddItemPopupButton.addEventListener('click', () => {
+        //     addItemPopup.style.display = 'none';
+        // });
+        // closeRemoveItemPopupButton.addEventListener('click', () => {
+        //     removeItemPopup.style.display = 'none';
+        // });
+        // closeMoveItemPopupButton.addEventListener('click', () => {
+        //     moveItemPopup.style.display = 'none';
+        // });
+
+        document.addEventListener('click', (event) => {
+            if (!sidebar.contains(event.target) && !hamburgerMenu.contains(event.target)) {
+                sidebar.classList.remove('show-sidebar');
+            }
+        });
+
+        // Function to fetch checklist items data from the server
+        function fetchChecklistItems() {
+            fetch('/get_checklist_items')
+                .then(response => response.json())
+                .then(data => {
+                    // Update the checklistItems with the fetched data
+                    checklistItems = data.checklist_items;
+                    console.log(checklistItems);  // Debug output
+
+                    // You can use this updated data as needed
+                })
+                .catch(error => {
+                    console.error('Error fetching checklist items:', error);
+                });
+        }
+
+        // Fetch data initially when the page loads
+        fetchChecklistItems();
+
+        // Fetch data every 1 second (adjust the interval as needed)
+        setInterval(fetchChecklistItems, 1000);  // 1000 milliseconds (1 second)
+
+        function updateCheckbox(section, item_name, checked) {
+            fetch('/update_checkbox', {
+                method: 'POST',
+                body: JSON.stringify({
+                    section: section,
+                    item_name: item_name,
+                    checked: checked,
+                    checked_by: '{{ session["initials"] }}'
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.message);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function updateQuantity(section, item_name, newQuantity) {
+            const quantityInput = document.getElementById(`user_quantity_${section}_${item_name}`);
+            quantityInput.value = newQuantity;
+
+            fetch('/update_quantity', {
+                method: 'POST',
+                body: JSON.stringify({
+                    section: section,
+                    item_name: item_name,
+                    new_quantity: newQuantity,
+                    checked_by: '{{ session["initials"] }}'
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.message);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+
+        // Function to update items dropdown based on the selected section
+        function updateItemsToRemove() {
+            const sectionSelect = document.getElementById('remove_section');
+            const itemsSelect = document.getElementById('item_to_remove');
+            const selectedSection = sectionSelect.value;
+            
+            // Clear current items
+            itemsSelect.innerHTML = '<option value="" disabled selected>Select Item to Remove</option>';
+            
+            // Get checklist items from Flask template
+            const checklistItems = {{ checklist_items | tojson }};
+            
+            // Populate items based on the selected section
+            if (selectedSection in checklistItems) {
+                const items = checklistItems[selectedSection];
+                for (const item of items) {
+                    const option = document.createElement('option');
+                    option.value = item.item_name;
+                    option.textContent = item.item_name;
+                    itemsSelect.appendChild(option);
+                }
+            }
+        }
+
+        function updateItemsToMove() {
+            const previousCategorySelect = document.getElementById('previous_category');
+            const itemsSelect = document.getElementById('item_to_move');
+            const newCategorySelect = document.getElementById('new_category');
+            const selectedSection = previousCategorySelect.value;
+
+            // Clear current items and new category options
+            itemsSelect.innerHTML = '<option value="" disabled selected>Select Item to Move</option>';
+            newCategorySelect.innerHTML = '<option value="" disabled selected>Select New Section</option>';
+
+            // Get checklist items from Flask template
+            const checklistItems = {{ checklist_items | tojson }};
+            
+            // Populate items based on the selected section
+            if (selectedSection in checklistItems) {
+                const items = checklistItems[selectedSection];
+                for (const item of items) {
+                    const option = document.createElement('option');
+                    option.value = item.item_name;
+                    option.textContent = item.item_name;
+                    itemsSelect.appendChild(option);
+                }
+            }
+
+            // Populate new category options excluding the selected previous section
+            for (const section in checklistItems) {
+                if (section !== selectedSection) {
+                    const option = document.createElement('option');
+                    option.value = section;
+                    option.textContent = section;
+                    newCategorySelect.appendChild(option);
+                }
+            }
+        }
+
+        // Function to update repair orders
+        function updateRepairOrders(repairOrders) {
+            const room = "{{ session['room'] }}";
+            const user = "{{ session['user'] }}";
+            socket.emit('update_repair_orders', {'room': room, 'user': user, 'repair_orders': repairOrders});
+        }
+
+        document.getElementById('repair_orders').addEventListener('input', function() {
+            const repairOrders = this.value;
+            updateRepairOrders(repairOrders);
+        });
+
+        socket.on('update_repair_orders', function(data) {
+            if (data.user !== '{{ session["user"] }}') {
+                const repairOrdersTextArea = document.getElementById('repair_orders');
+                repairOrdersTextArea.value += `\n${data.user}: ${data.repair_orders}`;
+            }
+        });
+
+        function generateEngineeringSheet() {
+            const repairOrders = document.getElementById('repair_orders').value;
+
+            const engineeringSheetData = {
+                repairOrders: repairOrders,
+                checklistItems: {}
+            };
+
+            function populateChecklistItems() {
+                {% for section, items in session['checklist_items'].items() %}
+                    engineeringSheetData.checklistItems["{{ section }}"] = [
+                        {% for item in items %}
+                            {
+                                item_name: "{{ item.item_name }}",
+                                user_quantity: "{{ item.user_quantity }}",
+                                correct_quantity: "{{ item.correct_quantity }}",
+                                checked: "{{ item.checked }}",
+                                checked_by: "{{ item.checked_by }}"
+                            },
+                        {% endfor %}
+                    ];
+                {% endfor %}
+            }
+
+            populateChecklistItems();
+
+            fetch('/generate_pdf', {
+                method: 'POST',
+                body: JSON.stringify(engineeringSheetData),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.blob())
+            .then(blob => {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `engineering_sheet_${date}.pdf`;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+            })
+            .catch(error => {
+                console.error('Error generating PDF:', error);
+            });
+        }
+
+    </script>
+</body>
+</html>

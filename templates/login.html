@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MLFD Engineering Sheet - Login</title>
+    <link rel="stylesheet" href="../static/styles.css">
+</head>
+<body>
+    <h1>MLFD Engineering Sheet - Login</h1>
+    <div class="hamburger-menu" id="hamburgerMenu">
+        <div class="hamburger-icon">
+            <div class="hamburger-line"></div>
+            <div class="hamburger-line"></div>
+            <div class="hamburger-line"></div>
+        </div>
+    </div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-content">
+            <a href="{{ url_for('logout') }}" id="logOutOption">Log Out</a>
+        </div>
+    </div>
+    <div class="login">
+        <h3></h3>
+        <form action="/login" class="submit-button" method="POST">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <button class="submit-button" type="submit">Login</button>
+        </form>
+        {% if error %}
+        <p style="color: red;">{{ error }}</p>
+        {% endif %}
+    </div>
+
+    <script>
+        const hamburgerMenu = document.getElementById('hamburgerMenu');
+        const sidebar = document.getElementById('sidebar');
+
+        // Function to toggle the sidebar
+        function toggleSidebar() {
+            sidebar.classList.toggle('show-sidebar');
+        }
+
+        // Event listeners
+        hamburgerMenu.addEventListener('click', toggleSidebar);
+        document.addEventListener('click', (event) => {
+            if (!sidebar.contains(event.target) && !hamburgerMenu.contains(event.target)) {
+                sidebar.classList.remove('show-sidebar');
+            }
+        });
+    </script>
+</body>
+</html>

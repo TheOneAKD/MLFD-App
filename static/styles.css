@@ -1,0 +1,303 @@
+body {
+    background-color: #0A3161; /* Set your desired blue color here */
+    color: #fff;
+    font-family: 'Arial Rounded MT Bold', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    background-color: #0A3161;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    margin: 0;
+    border-bottom: 1px solid #fff;
+}
+
+.dashboard-engineering-sheets a,
+.dashboard-engineering-sheets ul,
+.dashboard-engineering-sheets li {
+    color: #B31942;
+    text-align: center;
+    list-style-type: none;
+}
+
+.dashboard-engineering-sheets a:hover {
+    color: #ccc;
+}
+
+.dashboard-engineering-sheets a:visited {
+    color: #fff;
+    text-decoration: none;
+}
+
+#engine {
+    margin-bottom: 20px;
+}
+
+#engineeringSheetForm {
+    text-align: center;
+}
+
+#engineeringSheetForm input {
+    width: 15%; /* Adjust the width as needed */
+    padding: 5px;
+    border: 1px solid #ccc; /* Add a border for better visibility */
+    border-radius: 4px; /* Round the corners */
+    background-color: #fff; /* White background */
+    color: #333; /* Text color */
+    font-size: 11.5px; /* Adjust the font size */
+    margin-left: 10px; /* Adjust the margin for spacing */
+}
+
+.section {
+    font-size: 25px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    background-color: #B31942;
+    padding: 10px;
+    border-bottom: 1px solid #fff;
+    border-top: 1px solid #fff;
+    color: #fff;
+    text-align: center;
+}
+
+.section-name {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: #fff;
+}
+
+.section-icon {
+    margin-right: 5px;
+    color: #fff;
+}
+
+.section-items {
+    list-style: none;
+    padding-left: 20px;
+    display: none;
+}
+
+.item {
+    font-size: 20px;
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.item-toggle {
+    display: none;
+}
+
+.item-toggle:checked + label {
+    text-decoration: line-through;
+    color: #888;
+}
+
+.checklist {
+    list-style: none;
+    padding: 0;
+}
+
+.checklist_items {
+    width: 20px; /* Adjust the width as needed */
+    height: 20px; /* Adjust the height as needed */
+    margin:  10px 10px 10px 0px; /* Adjust the margin for spacing */
+    padding: 10px;
+}
+
+.quantity-input {
+    width: 25px; /* Adjust the width as needed */
+    padding: 5px;
+    border: 1px solid #ccc; /* Add a border for better visibility */
+    border-radius: 4px; /* Round the corners */
+    background-color: #fff; /* White background */
+    color: #333; /* Text color */
+    font-size: 11.5px; /* Adjust the font size */
+    margin-left: 10px; /* Adjust the margin for spacing */
+}
+
+.correct-quantity {
+    margin-left: 10px; /* Adjust the margin for spacing */
+    margin-right: 10px; /* Adjust the margin for spacing */
+    font-weight: bold; /* Make the correct quantity bold */
+}
+
+label {
+    /* Add your styling here */
+    font-size: 20px; /* Adjust the font size as needed */
+}
+
+.login, h4, .join {
+    font-size: 20px; /* Adjust the font size as needed */
+    text-align: center;
+}
+
+ul, li {
+    text-decoration: none;
+    list-style-type: none;
+}
+
+.hamburger-menu {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+/* CSS styles for the hamburger icon */
+.hamburger-line {
+    background-color: #fff;
+    width: 30px;
+    height: 3px;
+    margin: 6px 0;
+    border-radius: 3px;
+}
+
+.hamburger-icon {
+    background-color: #fff;
+    width: 30px;
+    height: 3px;
+    margin: 6px 0;
+    border-radius: 3px;
+}
+
+.add-item-popup label,
+.remove-item-popup label,
+.move-item-popup label,
+.login-button label {
+    display: block;
+    margin: 10 auto 10px auto;
+}
+
+.add-item-popup button:hover,
+.remove-item-popup button:hover,
+.move-item-popup button:hover,
+.submit-button button:hover,
+.login-button button:hover {
+    background-color: #B31942;
+    color: #fff;
+}
+
+.add-item-popup button,
+.remove-item-popup button,
+.move-item-popup button,
+.submit-button button,
+.login-button button {
+    width: 75%;
+    background-color: #0A3161;
+    color: #fff;
+}
+
+.submit-button,
+.login-button {
+    text-decoration: none;
+    text-emphasis: 2px;
+}
+
+.add-item-popup input,
+.remove-item-popup input,
+.move-item-popup input {
+    width: 75%;
+    color: #000;
+}
+
+.login input {
+    width: 15%;
+    color: #000;
+    text-align: center;
+}
+
+#closeAddItemPopup,
+#closeRemoveItemPopup,
+#closeMoveItemPopup {
+    position: absolute;
+    margin-top: 0px;
+    top: 10px;
+    right: 10px;
+    width: 10%;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 30px;
+    color: #333; /* Adjust the color as needed */
+}
+
+.move-item-popup,
+.add-item-popup,
+.remove-item-popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    color: #000;
+    width: 300px;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1001;
+}
+
+.add-item-popup input,
+.add-item-popup button:hover,
+.add-item-popup button,
+.remove-item-popup input,
+.remove-item-popup button:hover,
+.remove-item-popup button,
+.move-item-popup input,
+.move-item-popup button:hover,
+.move-item-popup button,
+.submit-button button:hover,
+.submit-button button,
+.login input,
+.login button:hover,
+.login button,
+.login-button button:hover,
+.login-button button {
+    padding: 8px;
+    margin: 10px auto 10px auto; /* Center align the boxes */
+    display: block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: background-color 0.5s ease; /* Add a smooth transition effect */
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: -250px; /* Initially hidden on the right */
+    width: 250px;
+    height: 100%;
+    background-color: #000;
+    overflow-x: hidden;
+    transition: 0.5s;
+    z-index: 1000;
+}
+
+.sidebar-content {
+    padding: 20px;
+    color: #fff;
+}
+
+.sidebar a {
+    text-decoration: none;
+    display: block;
+    margin-bottom: 20px;
+    color: #fff;
+    font-size: 18px;
+}
+
+.sidebar a:hover {
+    color: #B31942;
+}
+
+/* Show sidebar when the "show-sidebar" class is applied */
+.show-sidebar {
+    right: 0;
+}

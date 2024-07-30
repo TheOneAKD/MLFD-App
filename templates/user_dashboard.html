@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="../static/styles.css">
+</head>
+<body>
+    <h1>Dashboard</h1>
+    <div class="hamburger-menu" id="hamburgerMenu">
+        <div class="hamburger-icon">
+            <div class="hamburger-line"></div>
+            <div class="hamburger-line"></div>
+            <div class="hamburger-line"></div>
+        </div>
+    </div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-content">
+            <a href="/logout" id="logOutOption">Log Out</a>
+        </div>        
+    </div>
+    <div class="login">
+        <h3>Welcome to the dashboard, {{ username }}!</h3>
+        <!-- <form action="/start_engineering_sheet" class="submit-button" method="POST">
+            <label for="engine" class="login">Select Engine:</label>
+            <select id="engine" name="engine" required>
+                <option value="" disabled selected>Select Engine</option>
+                <option value="Engine 8734">Engine 8734</option>
+                <option value="Engine 8735">Engine 8735</option>
+                <option value="Rescue 8730">Rescue 8730</option>
+            </select>
+            <button type="submit" class="submit-button">Start Engineering Sheet</button>
+        </form> -->
+        <label for="engine" class="login">Start New Engineering Sheet:</label>
+        {% if 'Engine 8734' not in engines %}
+            <form action="/start_engineering_sheet" method="POST" class="submit-button">
+                <input type="hidden" name="engine" value="Engine 8734">
+                <button type="join" class="submit-button">Engine 8734 -- Start</button>
+            </form>
+        {% endif %}
+        {% if 'Engine 8735' not in engines %}
+            <form action="/start_engineering_sheet" method="POST" class="submit-button">
+                <input type="hidden" name="engine" value="Engine 8735">
+                <button type="join" class="submit-button">Engine 8735 -- Start</button>
+            </form>
+        {% endif %}
+        {% if 'Rescue 8730' not in engines %}
+            <form action="/start_engineering_sheet" method="POST" class="submit-button">
+                <input type="hidden" name="engine" value="Rescue 8730">
+                <button type="join" class="submit-button">Rescue 8730 -- Start</button>
+            </form>
+        {% endif %}
+        
+        <form id="engineeringSheetForm" action="/submit_page" method="POST">
+            <input type="hidden" name="current_user" value="{{ session['user'] }}">
+            <!-- <label for="repair_orders">Repair Orders:</label><br>
+            <textarea id="repair_orders" placeholder="Repair orders..." name="repair_orders" rows="4" cols="50">{{ repair_orders }}</textarea><br><br> -->
+        </form>
+        
+        <!-- <form action="/join_engineering_sheet" class="submit-button" method="POST">
+            <label for="join_engine" class="login">Join Existing Engine Sheet:</label>
+            <input type="text" id="join_engine" name="join_engine" placeholder="Enter Engine Number" required>
+            <button type="submit" class="submit-button">Join Engineering Sheet</button>
+        </form> -->
+    </div>
+
+    <div class="join">
+        {% if active_sessions %}
+            <br>
+            <label for="join_engine" class="login">Join Existing Engine Sheet:</label>
+            <ul>
+                {% for id, info in active_sessions.items() %}
+                    <li>
+                        <form action="/join_engineering_sheet" method="POST" class="submit-button">
+                            <input type="hidden" name="join_engine" value="{{ id }}">
+                            <button type="join" class="submit-button">Join {{ info['users'][0] }} on {{ info['engine'] }}</button>
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% if error %}
+            <p style="color: red;">{{ error }}</p>
+        {% endif %}              
+    </div>
+
+    {% if sheets %}
+        <h4>Saved Engineering Sheets</h4>
+        <div class="dashboard-engineering-sheets">
+            <ul>
+                {% for sheet in sheets %}
+                    <li><a href="/user_sheets/{{ sheet }}" target="_blank">{{ sheet }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <script>
+        const hamburgerMenu = document.getElementById('hamburgerMenu');
+        const sidebar = document.getElementById('sidebar');
+
+        // Function to toggle the sidebar
+        function toggleSidebar() {
+            sidebar.classList.toggle('show-sidebar');
+        }
+
+        // Event listeners
+        hamburgerMenu.addEventListener('click', toggleSidebar);
+        document.addEventListener('click', (event) => {
+            if (!sidebar.contains(event.target) && !hamburgerMenu.contains(event.target)) {
+                sidebar.classList.remove('show-sidebar');
+            }
+        });
+    </script>
+</body>
+</html>
