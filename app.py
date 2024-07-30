@@ -588,4 +588,8 @@ def handle_session_ended():
 
 
 if __name__ == '__main__':
-    socketio.run(app, host='0.0.0.0', port=8080, allow_unsafe_werkzeug=True)
+    env = os.environ.get('MY_APP_ENV', 'production')
+    if env == 'production':
+        socketio.run(app, host='0.0.0.0', port=8000, allow_unsafe_werkzeug=True)
+    else:
+        socketio.run(app, host='0.0.0.0', port=8000, debug=True)
