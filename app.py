@@ -589,20 +589,6 @@ def handle_session_ended():
 
 if __name__ == '__main__':
     if os.environ.get('FLASK_ENV') == 'production':
-        from gunicorn.app.base import BaseApplication
-        
-        class GunicornApp(BaseApplication):
-            def __init__(self, app):
-                self.application = app
-                super().__init__()
-
-            def load_config(self):
-                self.cfg.set("bind", "0.0.0.0:8080")
-                self.cfg.set("workers", 2)
-
-            def load(self):
-                return self.application
-
-        GunicornApp(socketio).run()
+        socketio.run(app, host='0.0.0.0', port=8080, allow_unsafe_werkzeug=True)
     else:
         socketio.run(app, host='0.0.0.0', port=8080, debug=True)
