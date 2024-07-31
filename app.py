@@ -15,7 +15,7 @@ import uuid
 app = Flask(__name__)
 socketio = SocketIO(app, async_mode='eventlet')
 
-app.secret_key = os.environ.get('SECRET_KEY', 'default_secret_key')
+app.secret_key = os.urandom(64)
 app.permanent_session_lifetime = timedelta(minutes=30)  # Set session timeout
 
 # Define the admin user
@@ -591,8 +591,4 @@ def handle_session_ended():
 
 
 if __name__ == '__main__':
-    env = os.environ.get('MY_APP_ENV', 'production')
-    if env == 'production':
-        socketio.run(app, host='0.0.0.0', port=8000, debug=False, allow_unsafe_werkzeug=True)
-    else:
-        socketio.run(app, host='0.0.0.0', port=8000, debug=True)
+    socketio.run(app, host='0.0.0.0', port=int(os.environ.get('PORT', 8000)), debug=True)
