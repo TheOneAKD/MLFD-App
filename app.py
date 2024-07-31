@@ -8,9 +8,11 @@ import functools
 import os
 import copy
 import uuid
+import eventlet
+eventlet.monkey_patch()
 
 app = Flask(__name__)
-socketio = SocketIO(app)
+socketio = SocketIO(app, async_mode='eventlet')
 
 app.secret_key = 'your_secret_key'  # Set a secret key for session management
 app.permanent_session_lifetime = timedelta(minutes=30)  # Set session timeout
