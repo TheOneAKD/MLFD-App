@@ -1,3 +1,6 @@
+import eventlet
+eventlet.monkey_patch()
+
 from flask import Flask, render_template, send_file, request, redirect, url_for, session, jsonify, make_response, after_this_request
 from flask_socketio import SocketIO, emit, join_room, leave_room
 from datetime import date, timedelta
@@ -8,13 +11,11 @@ import functools
 import os
 import copy
 import uuid
-import eventlet
-eventlet.monkey_patch()
 
 app = Flask(__name__)
 socketio = SocketIO(app, async_mode='eventlet')
 
-app.secret_key = 'your_secret_key'  # Set a secret key for session management
+app.secret_key = os.environ.get('SECRET_KEY', 'default_secret_key')
 app.permanent_session_lifetime = timedelta(minutes=30)  # Set session timeout
 
 # Define the admin user
