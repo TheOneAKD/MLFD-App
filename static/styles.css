@@ -1,5 +1,5 @@
 body {
-    background-color: #0A3161; /* Set your desired blue color here */
+    background-color: #0A3161;
     color: #fff;
     font-family: 'Arial Rounded MT Bold', sans-serif;
     margin: 0;
@@ -296,6 +296,72 @@ ul, li {
 .sidebar a:hover {
     color: #B31942;
 }
+
+/* Responsive styles */
+@media only screen and (max-width: 768px) {
+    body {
+        font-size: 16px; /* Adjust base font size for smaller screens */
+    }
+
+    h1 {
+        font-size: 24px; /* Adjust font size for headers */
+        padding: 15px; /* Adjust padding for headers */
+    }
+
+    .login input, 
+    #engineeringSheetForm input,
+    .quantity-input {
+        width: 80%; /* Adjust input width for smaller screens */
+        font-size: 16px; /* Adjust font size */
+        margin: 10px auto; /* Center align and adjust margin */
+    }
+
+    .hamburger-menu {
+        top: 10px; /* Adjust position */
+        right: 10px; /* Adjust position */
+    }
+
+    .sidebar {
+        width: 100%; /* Full width for sidebar */
+        height: auto; /* Auto height */
+        right: -100%; /* Initially hidden */
+    }
+
+    .show-sidebar {
+        right: 0;
+    }
+
+    .sidebar a {
+        font-size: 20px; /* Adjust font size for links */
+        margin-bottom: 15px; /* Adjust margin for links */
+    }
+
+    .dashboard-engineering-sheets a, 
+    .dashboard-engineering-sheets ul, 
+    .dashboard-engineering-sheets li {
+        font-size: 18px; /* Adjust font size */
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    h1 {
+        font-size: 20px; /* Further adjust font size for very small screens */
+        padding: 10px;
+    }
+
+    .login input, 
+    #engineeringSheetForm input,
+    .quantity-input {
+        width: 90%;
+        font-size: 14px;
+    }
+
+    .sidebar a {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+}
+
 
 /* Show sidebar when the "show-sidebar" class is applied */
 .show-sidebar {
