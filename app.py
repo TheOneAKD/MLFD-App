@@ -482,7 +482,7 @@ def generate_pdf():
             if 'checked_by' in item.keys():
                 if item['checked_by'] == None:
                     print(f"Before change: {item}")
-                    checklistItems[section][item]['checked_by'] = "__"
+                    item['checked_by'] = "__"
                     print(f"After change: {item}")
 
     for room_id in list(active_sessions.keys()):
