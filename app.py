@@ -477,13 +477,13 @@ def generate_pdf():
     active_sessions[room_id]['final_repair_orders'][session['user']] = user_repair_orders
 
     for section in checklistItems:
-        print(section)
+        # print(section)
         for item in checklistItems[section]:
             if 'checked_by' in item.keys():
                 if item['checked_by'] == None:
-                    print(f"Before change: {item}")
+                    # print(f"Before change: {item}")
                     item['checked_by'] = "__"
-                    print(f"After change: {item}")
+                    # print(f"After change: {item}")
 
     for room_id in list(active_sessions.keys()):
         if [session['user']] == active_sessions[room_id]['users']:
@@ -529,7 +529,7 @@ def generate_pdf():
             # Save a copy for the admin
             if not os.path.exists('engineering_sheets'):
                 os.makedirs('engineering_sheets')
-            admin_pdf_path = os.path.join('engineering_sheets', f'engineering_sheet_{names}_{d1}.pdf')
+            admin_pdf_path = os.path.join('engineering_sheets', f'Engineering_sheet_{names}_{d1}.pdf')
             with open(admin_pdf_path, 'wb') as f:
                 f.write(buffer.getvalue())
 
@@ -538,7 +538,7 @@ def generate_pdf():
                 user_dir = os.path.join('user_sheets', guy)
                 if not os.path.exists(user_dir):
                     os.makedirs(user_dir)
-                user_pdf_path = os.path.join(user_dir, f'engineering_sheet_{names}_{d1}.pdf')
+                user_pdf_path = os.path.join(user_dir, f'Engineering_sheet_{names}_{d1}.pdf')
                 with open(user_pdf_path, 'wb') as f:
                     f.write(buffer.getvalue())
                 
@@ -557,7 +557,7 @@ def generate_pdf():
     #         if session['user'] in active_sessions[room_id]['users']:
     #             active_sessions[room_id]['users'].remove(session['user'])
     
-    return send_file(buffer, as_attachment=True, download_name=f"engineering_sheet_{d1}_{names}.pdf", mimetype='application/pdf')
+    return send_file(buffer, as_attachment=True, download_name=f"Engineering_sheet_{d1}_{names}.pdf", mimetype='application/pdf')
 
 # SOCKETIO ***********************************************************************************************************************
 
