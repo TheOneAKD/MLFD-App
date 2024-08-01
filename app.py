@@ -476,11 +476,14 @@ def generate_pdf():
     d1 = ''.join(date.today().strftime("%d-%m-%Y"))
     active_sessions[room_id]['final_repair_orders'][session['user']] = user_repair_orders
 
-    for thingy in checklistItems:
-        print(thingy)
-        for thig in checklistItems[thingy]:
-            if 'checked_by' in thig.keys():
-                print(thig)
+    for section in checklistItems:
+        print(section)
+        for item in checklistItems[section]:
+            if 'checked_by' in item.keys():
+                if item['checked_by'] == None:
+                    print(f"Before change: {item}")
+                    checklistItems[section][item]['checked_by'] = "__"
+                    print(f"After change: {item}")
 
     for room_id in list(active_sessions.keys()):
         if [session['user']] == active_sessions[room_id]['users']:
