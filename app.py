@@ -329,29 +329,6 @@ def get_checklist_items():
 
 #     return jsonify({'message': 'Checkbox state updated successfully'})
 
-# @app.route('/update_quantity', methods=['POST'])
-# @login_required
-# def update_quantity():
-#     data = request.get_json()
-#     section = data['section']
-#     item_name = data['item_name']
-#     new_quantity = data['new_quantity']
-
-#     if section in session['checklist_items']:
-#         for item in session['checklist_items'][section]:
-#             if item['item_name'] == item_name:
-#                 item['user_quantity'] = new_quantity
-#                 item['checked_by'] = session['initials']
-#                 session.modified = True
-#                 break
-
-#         # Update the active_sessions entry
-#         if session['room'] in active_sessions:
-#             active_sessions[session['room']]['checklist_items'] = session['checklist_items']
-
-#     return jsonify({'message': 'Quantity updated successfully'})
-
-
 @app.route('/update_checkbox', methods=['POST'])
 def update_checkbox():
     data = request.get_json()
@@ -386,23 +363,49 @@ def update_quantity():
     new_quantity = data['new_quantity']
     checked_by = data['checked_by']
 
-
     if section in session['checklist_items']:
         for item in session['checklist_items'][section]:
             if item['item_name'] == item_name:
                 if item['checked_by'] == checked_by or not item['checked']:
                     item['user_quantity'] = new_quantity
+                    print(item)
                     session.modified = True
+                    print(item)
                     break
                 else:
                     return jsonify({'message': 'You cannot change this item'}), 403
                 
+    print(active_sessions[session['room']]['checklist_items'][section][item_name])
+    
     # Update the active_sessions entry
     if session['room'] in active_sessions:
         active_sessions[session['room']]['checklist_items'] = session['checklist_items']
+        print(active_sessions[session['room']]['checklist_items'][section][item_name])
         socketio.emit('update_checklist', {'checklist_items': session['checklist_items']}, room=session['room'])
     
     return jsonify({'message': 'Quantity updated successfully'})
+
+# @app.route('/update_quantity', methods=['POST'])
+# @login_required
+# def update_quantity():
+#     data = request.get_json()
+#     section = data['section']
+#     item_name = data['item_name']
+#     new_quantity = data['new_quantity']
+
+#     if section in session['checklist_items']:
+#         for item in session['checklist_items'][section]:
+#             if item['item_name'] == item_name:
+#                 item['user_quantity'] = new_quantity
+#                 item['checked_by'] = session['initials']
+#                 session.modified = True
+#                 break
+
+#         # Update the active_sessions entry
+#         if session['room'] in active_sessions:
+#             active_sessions[session['room']]['checklist_items'] = session['checklist_items']
+
+#     return jsonify({'message': 'Quantity updated successfully'})
 
 # ITEM CHANGING FROM INDEX *******************************************************************************************************
 # Don't need these for now
