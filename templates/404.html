@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 Not Found</title>
+    <style>
+        .error-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            background-color: #0A3161;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .error-container h1 {
+            font-size: 3.69em;
+            font-weight: bold;
+            font-family: 'Arial Rounded MT Bold', sans-serif;
+            text-shadow: 0 0 3px white;
+            margin-bottom: 20px;
+        }
+
+        .error-container p {
+            font-size: 1.0em;
+            font-family: sans-serif;
+            margin-bottom: 40px;
+        }
+
+        .error-container button {
+            background-color: #0A3161;
+            color: #fff;
+            padding: 8px;
+            margin: 10px auto 10px auto; /* Center align the boxes */
+            display: block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 75%;
+            font-family: sans-serif;
+            transition: background-color 0.5s ease; /* Add a smooth transition effect */
+        }
+
+        .error-container button:hover {
+            background-color: #B31942;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <h1>404 Error</h1>
+        <p>The page you are looking for cannot be found.</p>
+        <button onclick="window.history.back()">Go Back</button>
+    </div>
+</body>
+</html>
