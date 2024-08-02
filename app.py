@@ -120,7 +120,9 @@ def login_required(view):
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
-    if request.method == 'POST':
+    if 'user' in session:
+        redirect(url_for('/admin_dashboard'))
+    elif request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
         if username == ADMIN_USER and password == ADMIN_PASSWORD:
@@ -155,8 +157,9 @@ def logout():
 @app.route('/user_dashboard')
 @login_required
 def user_dashboard():
-    username = session['user']
-    if username != ADMIN_USER:
+    if session['user'] == ADMIN_USER:
+        print(f"User not Admin")
+        username = session['user']
         user_dir = os.path.join('user_sheets', session['user'])
         rooms = list(active_sessions.keys())
         engines = []
