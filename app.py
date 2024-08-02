@@ -92,11 +92,15 @@ def right_items(engine):
     else:
         raise Exception("That Page Does Not Exist WOMPA WOMPA")
 
-# HOME ROUTE *********************************************************************************************************************
+# IMPORTANT AND RANDOM ROUTES ****************************************************************************************************
 
 @app.route('/')
 def home():
     return redirect(url_for('user_dashboard'))
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
 
 # USER MANAGEMENT ****************************************************************************************************************
 
