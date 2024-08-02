@@ -28,41 +28,41 @@ active_sessions = {} # Used to store sessions
 
 engine8734 = {
     "Interior: Driver Seat": [
-        {"checked": False, "item_name": "MLFD Radio (Check Battery, Check Charge)", "user_quantity": 0, "correct_quantity": 1},
+        {"checked": False, "checked_by": None, "item_name": "MLFD Radio (Check Battery, Check Charge)", "user_quantity": 0, "correct_quantity": 1},
     ],
     "Compartment 1: Driver Side, Transverse": [
-        {"checked": False, "item_name": "Container of Flares", "user_quantity": 0, "correct_quantity": 1},
-        {"checked": False, "item_name": "Class A/B/C Extinguisher", "user_quantity": 0, "correct_quantity": 1},
-        {"checked": False, "item_name": "Class D Extinguisher", "user_quantity": 0, "correct_quantity": 1},
-        {"checked": False, "item_name": "Rolls of Caution Tape", "user_quantity": 0, "correct_quantity": 2},
-        {"checked": False, "item_name": "Slim Jim", "user_quantity": 0, "correct_quantity": 2},
-        {"checked": False, "item_name": "5\" Pony", "user_quantity": 0, "correct_quantity": 1},
-        {"checked": False, "item_name": "Bunny Tool", "user_quantity": 0, "correct_quantity": 1}
+        {"checked": False, "checked_by": None, "item_name": "Container of Flares", "user_quantity": 0, "correct_quantity": 1},
+        {"checked": False, "checked_by": None, "item_name": "Class A/B/C Extinguisher", "user_quantity": 0, "correct_quantity": 1},
+        {"checked": False, "checked_by": None, "item_name": "Class D Extinguisher", "user_quantity": 0, "correct_quantity": 1},
+        {"checked": False, "checked_by": None, "item_name": "Rolls of Caution Tape", "user_quantity": 0, "correct_quantity": 2},
+        {"checked": False, "checked_by": None, "item_name": "Slim Jim", "user_quantity": 0, "correct_quantity": 2},
+        {"checked": False, "checked_by": None, "item_name": "5\" Pony", "user_quantity": 0, "correct_quantity": 1},
+        {"checked": False, "checked_by": None, "item_name": "Bunny Tool", "user_quantity": 0, "correct_quantity": 1}
     ],
     "Compartment 2: Driver Side, Front": [
-        {"checked": False, "item_name": "1.75\" M-M Adapter", "user_quantity": 0, "correct_quantity": 2},
-        {"checked": False, "item_name": "1.75\" F-F Adapter", "user_quantity": 0, "correct_quantity": 2},
-        {"checked": False, "item_name": "NYC-NST Adapter", "user_quantity": 0, "correct_quantity": 3},
-        {"checked": False, "item_name": "2.5\" M-M Adapter", "user_quantity": 0, "correct_quantity": 2},
-        {"checked": False, "item_name": "2.5\" F-F Adapter", "user_quantity": 0, "correct_quantity": 2},
-        {"checked": False, "item_name": "Fog Nozzle", "user_quantity": 0, "correct_quantity": 2},
-        {"checked": False, "item_name": "Smooth Bore Nozzle", "user_quantity": 0, "correct_quantity": 1},
-        {"checked": False, "item_name": "Hose Roller", "user_quantity": 0, "correct_quantity": 1},
-        {"checked": False, "item_name": "2.5\" Wye Gate", "user_quantity": 0, "correct_quantity": 1},
-        {"checked": False, "item_name": "2.5\"-1.75\" Wye Gate", "user_quantity": 0, "correct_quantity": 1},
-        {"checked": False, "item_name": "Bowring", "user_quantity": 0, "correct_quantity": 1},
-        {"checked": False, "item_name": "45 Degree 2.5\" Adapter", "user_quantity": 0, "correct_quantity": 1},
-        {"checked": False, "item_name": "Small Spanners (Outside)", "user_quantity": 0, "correct_quantity": 2}
+        {"checked": False, "checked_by": None, "item_name": "1.75\" M-M Adapter", "user_quantity": 0, "correct_quantity": 2},
+        {"checked": False, "checked_by": None, "item_name": "1.75\" F-F Adapter", "user_quantity": 0, "correct_quantity": 2},
+        {"checked": False, "checked_by": None, "item_name": "NYC-NST Adapter", "user_quantity": 0, "correct_quantity": 3},
+        {"checked": False, "checked_by": None, "item_name": "2.5\" M-M Adapter", "user_quantity": 0, "correct_quantity": 2},
+        {"checked": False, "checked_by": None, "item_name": "2.5\" F-F Adapter", "user_quantity": 0, "correct_quantity": 2},
+        {"checked": False, "checked_by": None, "item_name": "Fog Nozzle", "user_quantity": 0, "correct_quantity": 2},
+        {"checked": False, "checked_by": None, "item_name": "Smooth Bore Nozzle", "user_quantity": 0, "correct_quantity": 1},
+        {"checked": False, "checked_by": None, "item_name": "Hose Roller", "user_quantity": 0, "correct_quantity": 1},
+        {"checked": False, "checked_by": None, "item_name": "2.5\" Wye Gate", "user_quantity": 0, "correct_quantity": 1},
+        {"checked": False, "checked_by": None, "item_name": "2.5\"-1.75\" Wye Gate", "user_quantity": 0, "correct_quantity": 1},
+        {"checked": False, "checked_by": None, "item_name": "Bowring", "user_quantity": 0, "correct_quantity": 1},
+        {"checked": False, "checked_by": None, "item_name": "45 Degree 2.5\" Adapter", "user_quantity": 0, "correct_quantity": 1},
+        {"checked": False, "checked_by": None, "item_name": "Small Spanners (Outside)", "user_quantity": 0, "correct_quantity": 2}
     ],
     "Compartment 3: Driver Side, Mid": [
-        {"checked": False, "item_name": "Haligan", "user_quantity": 0, "correct_quantity": 1},
-        {"checked": False, "item_name": "Flathead Axe", "user_quantity": 0, "correct_quantity": 1},
-        {"checked": False, "item_name": "Pickheaded Axe", "user_quantity": 0, "correct_quantity": 1},
-        {"checked": False, "item_name": "Maul", "user_quantity": 0, "correct_quantity": 1},
-        {"checked": False, "item_name": "Whelen Portable Area Lights (Check Charge)", "user_quantity": 0, "correct_quantity": 1},
-        {"checked": False, "item_name": "Bolt Cutter", "user_quantity": 0, "correct_quantity": 1},
-        {"checked": False, "item_name": "Gas Shut Off Key", "user_quantity": 0, "correct_quantity": 1},
-        {"checked": False, "item_name": "Car Jack", "user_quantity": 0, "correct_quantity": 1}
+        {"checked": False, "checked_by": None, "item_name": "Haligan", "user_quantity": 0, "correct_quantity": 1},
+        {"checked": False, "checked_by": None, "item_name": "Flathead Axe", "user_quantity": 0, "correct_quantity": 1},
+        {"checked": False, "checked_by": None, "item_name": "Pickheaded Axe", "user_quantity": 0, "correct_quantity": 1},
+        {"checked": False, "checked_by": None, "item_name": "Maul", "user_quantity": 0, "correct_quantity": 1},
+        {"checked": False, "checked_by": None, "item_name": "Whelen Portable Area Lights (Check Charge)", "user_quantity": 0, "correct_quantity": 1},
+        {"checked": False, "checked_by": None, "item_name": "Bolt Cutter", "user_quantity": 0, "correct_quantity": 1},
+        {"checked": False, "checked_by": None, "item_name": "Gas Shut Off Key", "user_quantity": 0, "correct_quantity": 1},
+        {"checked": False, "checked_by": None, "item_name": "Car Jack", "user_quantity": 0, "correct_quantity": 1}
     ]
 }
 
