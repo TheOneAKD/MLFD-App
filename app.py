@@ -19,8 +19,8 @@ app.secret_key = os.urandom(64)
 app.permanent_session_lifetime = timedelta(minutes=30)  # Set session timeout
 
 # Define the admin user
-ADMIN_USER = 'ADMIN'
-ADMIN_PASSWORD = '9999'
+ADMIN_USER = str(os.environ.get('ADMIN_USER'))
+ADMIN_PASSWORD = str(os.environ.get('ADMIN_PASSWORD'))
 
 active_sessions = {} # Used to store sessions
 
@@ -156,28 +156,31 @@ def logout():
 @login_required
 def user_dashboard():
     username = session['user']
-    user_dir = os.path.join('user_sheets', session['user'])
-    rooms = list(active_sessions.keys())
-    engines = []
-
-    for room_id in list(active_sessions.keys()):
-        if username in active_sessions[room_id]['users']:
-            active_sessions[room_id]['users'].remove(username)
+    if username != ADMIN_USER:
+        user_dir = os.path.join('user_sheets', session['user'])
+        rooms = list(active_sessions.keys())
+        engines = []
     
-    # for key in list(active_sessions.keys()):
-        # print(f"Key: {key} | Engine: {active_sessions[key]['engine']} | Users: {active_sessions[key]['users']}")
-
-    sheets = []
-    if os.path.exists(user_dir):
-        sheets = os.listdir(user_dir)
-
-    for item in list(active_sessions.values()):
-        engines.append(item['engine'])
+        for room_id in list(active_sessions.keys()):
+            if username in active_sessions[room_id]['users']:
+                active_sessions[room_id]['users'].remove(username)
+        
+        # for key in list(active_sessions.keys()):
+            # print(f"Key: {key} | Engine: {active_sessions[key]['engine']} | Users: {active_sessions[key]['users']}")
     
-    if 'error' in session:
-        return render_template('user_dashboard.html', sheets=sheets, active_sessions=active_sessions, username=username, rooms=rooms, engines=engines, error=session['error'])
+        sheets = []
+        if os.path.exists(user_dir):
+            sheets = os.listdir(user_dir)
+    
+        for item in list(active_sessions.values()):
+            engines.append(item['engine'])
+        
+        if 'error' in session:
+            return render_template('user_dashboard.html', sheets=sheets, active_sessions=active_sessions, username=username, rooms=rooms, engines=engines, error=session['error'])
+        else:
+             return render_template('user_dashboard.html', sheets=sheets, active_sessions=active_sessions, username=username, rooms=rooms, engines=engines, error=None)
     else:
-         return render_template('user_dashboard.html', sheets=sheets, active_sessions=active_sessions, username=username, rooms=rooms, engines=engines, error=None)
+        redirect(url_for('/admin_dashboard'))
 
 @app.route('/exit_engineering_sheet')
 @login_required
@@ -495,36 +498,50 @@ def generate_pdf():
             buffer = BytesIO()
             p = canvas.Canvas(buffer, pagesize=letter)
             width, height = letter
-
-            p.drawString(100, height - 40, f"Engineered By: {names}")
-            p.drawString(100, height - 60, f"Date: {d1}")
-            p.drawString(100, height - 80, "Repair Orders:")
-
-            y = height - 100
-            for guy, orders in active_sessions[room_id]['final_repair_orders'].items():
-                p.drawString(100, y, f"{guy}: {orders}")
-                y -= 20
-                if y < 40:
-                    p.showPage()
-                    y = height - 40
-
-            y = height - 140
-            p.drawString(100, y, "Engineering Sheet:")
+        
+            # Title
+            p.setFont("Helvetica-Bold", 16)
+            p.drawString(100, height - 40, "Engineering Sheet")
+        
+            # Subtitles
+            p.setFont("Helvetica", 12)
+            p.drawString(100, height - 60, f"Engineered By: {names}")
+            p.drawString(100, height - 80, f"Date: {d1}")
+            
+            # Checklist Items
+            y = height - 120
+            p.setFont("Helvetica-Bold", 14)
+            p.drawString(100, y, "Checklist Items:")
             y -= 20
-
+            p.setFont("Helvetica", 12)
             for section, items in checklistItems.items():
+                p.setFont("Helvetica-Bold", 12)
                 p.drawString(100, y, section + ":")
                 y -= 20
+                p.setFont("Helvetica", 12)
                 for item in items:
-                    checked_status = '√' if item['checked'] == True else '×'
+                    checked_status = '√' if item['checked'] else '×'
                     p.drawString(100, y, f"{item.get('checked_by', '__')} | {checked_status} -- {item['user_quantity']}/{item['correct_quantity']} : {item['item_name']}")
                     y -= 20
                     if y < 40:  # Ensure there's enough space on the page
                         p.showPage()
                         y = height - 40
-
-            p.showPage()
-            p.save()
+            
+                # Repair Orders
+                y -= 40
+                p.setFont("Helvetica-Bold", 14)
+                p.drawString(100, y, "Repair Orders:")
+                y -= 20
+                p.setFont("Helvetica", 12)
+                for guy, orders in active_sessions[room_id]['final_repair_orders'].items():
+                    p.drawString(100, y, f"{guy}: {orders}")
+                    y -= 20
+                    if y < 40:
+                        p.showPage()
+                        y = height - 40
+            
+                p.showPage()
+                p.save()
 
             # Save a copy for the admin
             if not os.path.exists('engineering_sheets'):
