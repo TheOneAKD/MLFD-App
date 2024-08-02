@@ -505,11 +505,13 @@ def generate_pdf():
             # Title
             p.setFont("Helvetica-Bold", 16)
             p.drawString(100, height - 40, "Engineering Sheet")
+            print("title")
         
             # Subtitles
             p.setFont("Helvetica", 12)
             p.drawString(100, height - 60, f"Engineered By: {names}")
             p.drawString(100, height - 80, f"Date: {d1}")
+            print("subtitles")
             
             # Checklist Items
             y = height - 120
@@ -529,22 +531,24 @@ def generate_pdf():
                     if y < 40:  # Ensure there's enough space on the page
                         p.showPage()
                         y = height - 40
+            print("checklist items")
             
-                # Repair Orders
-                y -= 40
-                p.setFont("Helvetica-Bold", 14)
-                p.drawString(100, y, "Repair Orders:")
+            # Repair Orders
+            y -= 40
+            p.setFont("Helvetica-Bold", 14)
+            p.drawString(100, y, "Repair Orders:")
+            y -= 20
+            p.setFont("Helvetica", 12)
+            for guy, orders in active_sessions[room_id]['final_repair_orders'].items():
+                p.drawString(100, y, f"{guy}: {orders}")
                 y -= 20
-                p.setFont("Helvetica", 12)
-                for guy, orders in active_sessions[room_id]['final_repair_orders'].items():
-                    p.drawString(100, y, f"{guy}: {orders}")
-                    y -= 20
-                    if y < 40:
-                        p.showPage()
-                        y = height - 40
+                if y < 40:
+                    p.showPage()
+                    y = height - 40
             
-                p.showPage()
-                p.save()
+            print("repair orders")
+            p.showPage()
+            p.save()
 
             # Save a copy for the admin
             if not os.path.exists('engineering_sheets'):
@@ -571,6 +575,7 @@ def generate_pdf():
             active_sessions.pop(room)
 
             buffer.seek(0)  # Reset buffer to start
+            print("all done :)")
 
     # # Remove user for sheet
     # for room_id in list(active_sessions.keys()):
