@@ -200,7 +200,7 @@
                 if (item) {
                     checkbox.checked = item.checked;
                     document.getElementById(`user_quantity_${section}_${item_name}`).value = item.user_quantity;
-                    if (item.checked_by && item.checked_by !== '{{ session["initials"] }}' || item.checked_by !== '--') {
+                    if (item.checked_by && !(item.checked_by in ['{{ session["initials"] }}', '--'])) {
                         checkbox.disabled = true;
                         document.getElementById(`user_quantity_${section}_${item_name}`).disabled = true;
                     } else {
