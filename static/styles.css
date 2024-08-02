@@ -301,6 +301,7 @@ ul, li {
 @media only screen and (max-width: 768px) {
     body {
         font-size: 16px; /* Adjust base font size for smaller screens */
+        padding-top: 20px; /* Add top padding for in-screen cameras */
     }
 
     h1 {
@@ -344,6 +345,10 @@ ul, li {
 }
 
 @media only screen and (max-width: 480px) {
+    body {
+        padding-top: 30px; /* More top padding for very small screens */
+    }
+
     h1 {
         font-size: 20px; /* Further adjust font size for very small screens */
         padding: 10px;
@@ -361,7 +366,6 @@ ul, li {
         margin-bottom: 10px;
     }
 }
-
 
 /* Show sidebar when the "show-sidebar" class is applied */
 .show-sidebar {
