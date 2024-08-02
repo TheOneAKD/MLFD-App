@@ -375,12 +375,12 @@ def update_quantity():
                 else:
                     return jsonify({'message': 'You cannot change this item'}), 403
                 
-    print(active_sessions[session['room']]['checklist_items'][section][item_name])
+    print(active_sessions[session['room']]['checklist_items'][section])
     
     # Update the active_sessions entry
     if session['room'] in active_sessions:
         active_sessions[session['room']]['checklist_items'] = session['checklist_items']
-        print(active_sessions[session['room']]['checklist_items'][section][item_name])
+        print(active_sessions[session['room']]['checklist_items'][section])
         socketio.emit('update_checklist', {'checklist_items': session['checklist_items']}, room=session['room'])
     
     return jsonify({'message': 'Quantity updated successfully'})
