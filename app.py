@@ -28,41 +28,41 @@ active_sessions = {} # Used to store sessions
 
 engine8734 = {
     "Interior: Driver Seat": [
-        {"checked": False, "checked_by": None, "item_name": "MLFD Radio (Check Battery, Check Charge)", "user_quantity": 0, "correct_quantity": 1},
+        {"checked": False, "checked_by": "--", "item_name": "MLFD Radio (Check Battery, Check Charge)", "user_quantity": 0, "correct_quantity": 1},
     ],
     "Compartment 1: Driver Side, Transverse": [
-        {"checked": False, "checked_by": None, "item_name": "Container of Flares", "user_quantity": 0, "correct_quantity": 1},
-        {"checked": False, "checked_by": None, "item_name": "Class A/B/C Extinguisher", "user_quantity": 0, "correct_quantity": 1},
-        {"checked": False, "checked_by": None, "item_name": "Class D Extinguisher", "user_quantity": 0, "correct_quantity": 1},
-        {"checked": False, "checked_by": None, "item_name": "Rolls of Caution Tape", "user_quantity": 0, "correct_quantity": 2},
-        {"checked": False, "checked_by": None, "item_name": "Slim Jim", "user_quantity": 0, "correct_quantity": 2},
-        {"checked": False, "checked_by": None, "item_name": "5\" Pony", "user_quantity": 0, "correct_quantity": 1},
-        {"checked": False, "checked_by": None, "item_name": "Bunny Tool", "user_quantity": 0, "correct_quantity": 1}
+        {"checked": False, "checked_by": "--", "item_name": "Container of Flares", "user_quantity": 0, "correct_quantity": 1},
+        {"checked": False, "checked_by": "--", "item_name": "Class A/B/C Extinguisher", "user_quantity": 0, "correct_quantity": 1},
+        {"checked": False, "checked_by": "--", "item_name": "Class D Extinguisher", "user_quantity": 0, "correct_quantity": 1},
+        {"checked": False, "checked_by": "--", "item_name": "Rolls of Caution Tape", "user_quantity": 0, "correct_quantity": 2},
+        {"checked": False, "checked_by": "--", "item_name": "Slim Jim", "user_quantity": 0, "correct_quantity": 2},
+        {"checked": False, "checked_by": "--", "item_name": "5\" Pony", "user_quantity": 0, "correct_quantity": 1},
+        {"checked": False, "checked_by": "--", "item_name": "Bunny Tool", "user_quantity": 0, "correct_quantity": 1}
     ],
     "Compartment 2: Driver Side, Front": [
-        {"checked": False, "checked_by": None, "item_name": "1.75\" M-M Adapter", "user_quantity": 0, "correct_quantity": 2},
-        {"checked": False, "checked_by": None, "item_name": "1.75\" F-F Adapter", "user_quantity": 0, "correct_quantity": 2},
-        {"checked": False, "checked_by": None, "item_name": "NYC-NST Adapter", "user_quantity": 0, "correct_quantity": 3},
-        {"checked": False, "checked_by": None, "item_name": "2.5\" M-M Adapter", "user_quantity": 0, "correct_quantity": 2},
-        {"checked": False, "checked_by": None, "item_name": "2.5\" F-F Adapter", "user_quantity": 0, "correct_quantity": 2},
-        {"checked": False, "checked_by": None, "item_name": "Fog Nozzle", "user_quantity": 0, "correct_quantity": 2},
-        {"checked": False, "checked_by": None, "item_name": "Smooth Bore Nozzle", "user_quantity": 0, "correct_quantity": 1},
-        {"checked": False, "checked_by": None, "item_name": "Hose Roller", "user_quantity": 0, "correct_quantity": 1},
-        {"checked": False, "checked_by": None, "item_name": "2.5\" Wye Gate", "user_quantity": 0, "correct_quantity": 1},
-        {"checked": False, "checked_by": None, "item_name": "2.5\"-1.75\" Wye Gate", "user_quantity": 0, "correct_quantity": 1},
-        {"checked": False, "checked_by": None, "item_name": "Bowring", "user_quantity": 0, "correct_quantity": 1},
-        {"checked": False, "checked_by": None, "item_name": "45 Degree 2.5\" Adapter", "user_quantity": 0, "correct_quantity": 1},
-        {"checked": False, "checked_by": None, "item_name": "Small Spanners (Outside)", "user_quantity": 0, "correct_quantity": 2}
+        {"checked": False, "checked_by": "--", "item_name": "1.75\" M-M Adapter", "user_quantity": 0, "correct_quantity": 2},
+        {"checked": False, "checked_by": "--", "item_name": "1.75\" F-F Adapter", "user_quantity": 0, "correct_quantity": 2},
+        {"checked": False, "checked_by": "--", "item_name": "NYC-NST Adapter", "user_quantity": 0, "correct_quantity": 3},
+        {"checked": False, "checked_by": "--", "item_name": "2.5\" M-M Adapter", "user_quantity": 0, "correct_quantity": 2},
+        {"checked": False, "checked_by": "--", "item_name": "2.5\" F-F Adapter", "user_quantity": 0, "correct_quantity": 2},
+        {"checked": False, "checked_by": "--", "item_name": "Fog Nozzle", "user_quantity": 0, "correct_quantity": 2},
+        {"checked": False, "checked_by": "--", "item_name": "Smooth Bore Nozzle", "user_quantity": 0, "correct_quantity": 1},
+        {"checked": False, "checked_by": "--", "item_name": "Hose Roller", "user_quantity": 0, "correct_quantity": 1},
+        {"checked": False, "checked_by": "--", "item_name": "2.5\" Wye Gate", "user_quantity": 0, "correct_quantity": 1},
+        {"checked": False, "checked_by": "--", "item_name": "2.5\"-1.75\" Wye Gate", "user_quantity": 0, "correct_quantity": 1},
+        {"checked": False, "checked_by": "--", "item_name": "Bowring", "user_quantity": 0, "correct_quantity": 1},
+        {"checked": False, "checked_by": "--", "item_name": "45 Degree 2.5\" Adapter", "user_quantity": 0, "correct_quantity": 1},
+        {"checked": False, "checked_by": "--", "item_name": "Small Spanners (Outside)", "user_quantity": 0, "correct_quantity": 2}
     ],
     "Compartment 3: Driver Side, Mid": [
-        {"checked": False, "checked_by": None, "item_name": "Haligan", "user_quantity": 0, "correct_quantity": 1},
-        {"checked": False, "checked_by": None, "item_name": "Flathead Axe", "user_quantity": 0, "correct_quantity": 1},
-        {"checked": False, "checked_by": None, "item_name": "Pickheaded Axe", "user_quantity": 0, "correct_quantity": 1},
-        {"checked": False, "checked_by": None, "item_name": "Maul", "user_quantity": 0, "correct_quantity": 1},
-        {"checked": False, "checked_by": None, "item_name": "Whelen Portable Area Lights (Check Charge)", "user_quantity": 0, "correct_quantity": 1},
-        {"checked": False, "checked_by": None, "item_name": "Bolt Cutter", "user_quantity": 0, "correct_quantity": 1},
-        {"checked": False, "checked_by": None, "item_name": "Gas Shut Off Key", "user_quantity": 0, "correct_quantity": 1},
-        {"checked": False, "checked_by": None, "item_name": "Car Jack", "user_quantity": 0, "correct_quantity": 1}
+        {"checked": False, "checked_by": "--", "item_name": "Haligan", "user_quantity": 0, "correct_quantity": 1},
+        {"checked": False, "checked_by": "--", "item_name": "Flathead Axe", "user_quantity": 0, "correct_quantity": 1},
+        {"checked": False, "checked_by": "--", "item_name": "Pickheaded Axe", "user_quantity": 0, "correct_quantity": 1},
+        {"checked": False, "checked_by": "--", "item_name": "Maul", "user_quantity": 0, "correct_quantity": 1},
+        {"checked": False, "checked_by": "--", "item_name": "Whelen Portable Area Lights (Check Charge)", "user_quantity": 0, "correct_quantity": 1},
+        {"checked": False, "checked_by": "--", "item_name": "Bolt Cutter", "user_quantity": 0, "correct_quantity": 1},
+        {"checked": False, "checked_by": "--", "item_name": "Gas Shut Off Key", "user_quantity": 0, "correct_quantity": 1},
+        {"checked": False, "checked_by": "--", "item_name": "Car Jack", "user_quantity": 0, "correct_quantity": 1}
     ]
 }
 
@@ -340,9 +340,10 @@ def update_checkbox():
     if section in active_sessions[session['room']]['checklist_items']:
         for item in active_sessions[session['room']]['checklist_items'][section]:
             if item['item_name'] == item_name:
-                if 'checked_by' not in item or item['checked_by'] == checked_by or not item['checked']:
+                if item['checked_by'] == checked_by or not item['checked']:
                     item['checked'] = checked
                     item['checked_by'] = checked_by if checked else None
+                    print(item)
                     session.modified = True
                     break
                 else:
@@ -368,6 +369,7 @@ def update_quantity():
             if item['item_name'] == item_name:
                 if item['checked_by'] == checked_by or not item['checked']:
                     item['user_quantity'] = new_quantity
+                    item['checked_by'] = checked_by if checked else None
                     print(item)
                     session.modified = True
                     print(item)
@@ -487,15 +489,6 @@ def generate_pdf():
     d1 = ''.join(date.today().strftime("%d-%m-%Y"))
     active_sessions[room_id]['final_repair_orders'][session['user']] = user_repair_orders
 
-    for section in checklistItems:
-        # print(section)
-        for item in checklistItems[section]:
-            if 'checked_by' in item.keys():
-                if item['checked_by'] == None:
-                    # print(f"Before change: {item}")
-                    item['checked_by'] = "__"
-                    # print(f"After change: {item}")
-
     for room_id in list(active_sessions.keys()):
         if [session['user']] == active_sessions[room_id]['users']:
 
@@ -529,7 +522,7 @@ def generate_pdf():
                 p.setFont("Helvetica", 12)
                 for item in items:
                     checked_status = '√' if item['checked'] else '×'
-                    p.drawString(100, y, f"{item.get('checked_by', '__')} | {checked_status} -- {item['user_quantity']}/{item['correct_quantity']} : {item['item_name']}")
+                    p.drawString(100, y, f"{item.get('checked_by', '--')} | {checked_status} -- {item['user_quantity']}/{item['correct_quantity']} : {item['item_name']}")
                     y -= 20
                     if y < 40:  # Ensure there's enough space on the page
                         p.showPage()
