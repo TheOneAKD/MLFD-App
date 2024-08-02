@@ -121,7 +121,7 @@ def login_required(view):
 def login():
     error = None
     if 'user' in session:
-        redirect(url_for('/admin_dashboard'))
+        redirect(url_for('user_dashboard'))
     elif request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
