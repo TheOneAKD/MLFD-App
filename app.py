@@ -183,7 +183,7 @@ def user_dashboard():
         else:
              return render_template('user_dashboard.html', sheets=sheets, active_sessions=active_sessions, username=username, rooms=rooms, engines=engines, error=None)
     else:
-        redirect(url_for('/admin_dashboard'))
+        redirect(url_for('admin_dashboard'))
 
 @app.route('/exit_engineering_sheet')
 @login_required
