@@ -266,6 +266,8 @@
         // const addItemPopup = document.getElementById('addItemPopup');
         // const removeItemPopup = document.getElementById('removeItemPopup');
         // const moveItemPopup = document.getElementById('moveItemPopup');
+        const repairOrdersTextarea = document.getElementById('repair_orders');
+        const body = document.body;
 
         // Function to toggle the sidebar
         function toggleSidebar() {
@@ -274,6 +276,22 @@
 
         // Event listeners
         hamburgerMenu.addEventListener('click', toggleSidebar);
+        document.addEventListener('click', (event) => {
+            if (!sidebar.contains(event.target) && !hamburgerMenu.contains(event.target)) {
+                sidebar.classList.remove('show-sidebar');
+            }
+        });
+
+        // Add padding to the bottom when typing in the textarea
+        repairOrdersTextarea.addEventListener('focus', () => {
+            body.style.paddingBottom = '200px';
+        });
+
+        repairOrdersTextarea.addEventListener('blur', () => {
+            body.style.paddingBottom = '0';
+        });
+
+        // Event listeners
         // addItemOption.addEventListener('click', () => {
         //     addItemPopup.style.display = 'block';
         //     removeItemPopup.style.display = 'none';
@@ -302,13 +320,7 @@
         // closeMoveItemPopupButton.addEventListener('click', () => {
         //     moveItemPopup.style.display = 'none';
         // });
-
-        document.addEventListener('click', (event) => {
-            if (!sidebar.contains(event.target) && !hamburgerMenu.contains(event.target)) {
-                sidebar.classList.remove('show-sidebar');
-            }
-        });
-
+        
         // Function to fetch checklist items data from the server
         function fetchChecklistItems() {
             fetch('/get_checklist_items')
