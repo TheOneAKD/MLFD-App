@@ -121,7 +121,7 @@ def login_required(view):
 def login():
     error = None
     if 'user' in session:
-        redirect(url_for('user_dashboard'))
+        return redirect(url_for('user_dashboard'))
     elif request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
@@ -182,8 +182,7 @@ def user_dashboard():
             return render_template('user_dashboard.html', sheets=sheets, active_sessions=active_sessions, username=username, rooms=rooms, engines=engines, error=session['error'])
         else:
              return render_template('user_dashboard.html', sheets=sheets, active_sessions=active_sessions, username=username, rooms=rooms, engines=engines, error=None)
-    else:
-        redirect(url_for('admin_dashboard'))
+    return redirect(url_for('admin_dashboard'))
 
 @app.route('/exit_engineering_sheet')
 @login_required
