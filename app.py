@@ -158,7 +158,6 @@ def logout():
 @login_required
 def user_dashboard():
     if session['user'] != ADMIN_USER:
-        print(f"User not Admin")
         username = session['user']
         user_dir = os.path.join('user_sheets', session['user'])
         rooms = list(active_sessions.keys())
@@ -503,14 +502,12 @@ def generate_pdf():
         
             # Title
             p.setFont("Helvetica-Bold", 16)
-            p.drawString(100, height - 40, "Engineering Sheet")
-            print("title")
+            p.drawString(100, height - 40, f"Engineering Sheet for {active_sessions[room_id]['engine']}")
         
             # Subtitles
             p.setFont("Helvetica", 12)
             p.drawString(100, height - 60, f"Engineered By: {names}")
             p.drawString(100, height - 80, f"Date: {d1}")
-            print("subtitles")
             
             # Checklist Items
             y = height - 120
@@ -530,7 +527,6 @@ def generate_pdf():
                     if y < 40:  # Ensure there's enough space on the page
                         p.showPage()
                         y = height - 40
-            print("checklist items")
             
             # Repair Orders
             y -= 40
@@ -545,7 +541,6 @@ def generate_pdf():
                     p.showPage()
                     y = height - 40
             
-            print("repair orders")
             p.showPage()
             p.save()
 
@@ -574,7 +569,6 @@ def generate_pdf():
             active_sessions.pop(room)
 
             buffer.seek(0)  # Reset buffer to start
-            print("all done :)")
 
     # # Remove user for sheet
     # for room_id in list(active_sessions.keys()):
