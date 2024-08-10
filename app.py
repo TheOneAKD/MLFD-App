@@ -486,6 +486,7 @@ def generate_pdf():
     repair_orders[session['user']] = user_repair_orders
     active_sessions[session['room']]['repair_orders'] = repair_orders
     checklistItems = active_sessions[session['room']]['checklist_items']
+    sheetEngine = active_sessions[room_id]['engine']
     d1 = ''.join(date.today().strftime("%d-%m-%Y"))
     active_sessions[room_id]['final_repair_orders'][session['user']] = user_repair_orders
 
@@ -502,7 +503,7 @@ def generate_pdf():
         
             # Title
             p.setFont("Helvetica-Bold", 16)
-            p.drawString(100, height - 40, f"Engineering Sheet for {active_sessions[room_id]['engine']}")
+            p.drawString(100, height - 40, f"Engineering Sheet for {sheetEngine}")
         
             # Subtitles
             p.setFont("Helvetica", 12)
@@ -547,7 +548,7 @@ def generate_pdf():
             # Save a copy for the admin
             if not os.path.exists('engineering_sheets'):
                 os.makedirs('engineering_sheets')
-            admin_pdf_path = os.path.join('engineering_sheets', f'Engineering_sheet_{names}_{d1}.pdf')
+            admin_pdf_path = os.path.join('engineering_sheets', f'Engineering_sheet_{names}_{d1}_{sheetEngine}.pdf')
             with open(admin_pdf_path, 'wb') as f:
                 f.write(buffer.getvalue())
 
@@ -556,7 +557,7 @@ def generate_pdf():
                 user_dir = os.path.join('user_sheets', guy)
                 if not os.path.exists(user_dir):
                     os.makedirs(user_dir)
-                user_pdf_path = os.path.join(user_dir, f'Engineering_sheet_{names}_{d1}.pdf')
+                user_pdf_path = os.path.join(user_dir, f'Engineering_sheet_{names}_{d1}_{sheetEngine}.pdf')
                 with open(user_pdf_path, 'wb') as f:
                     f.write(buffer.getvalue())
                 
