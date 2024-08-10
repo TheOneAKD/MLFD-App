@@ -224,7 +224,7 @@
                 const item_name = event.target.getAttribute('data-item-name');
                 const checked = event.target.checked;
                 const newQuantity = document.getElementById(`user_quantity_${section}_${item_name}`).value;
-                const checked_by = '{{ session["initials"] }}';
+                const checked_by = '--';
                 updateChecklist(section, item_name, checked, newQuantity, checked_by);
             });
         });
@@ -235,7 +235,7 @@
                 const item_name = event.target.getAttribute('data-item-name');
                 const newQuantity = event.target.value;
                 const checked = document.querySelector(`input[data-section="${section}"][data-item-name="${item_name}"]`).checked;
-                const checked_by = '{{ session["initials"] }}';
+                const checked_by = '--';
                 updateChecklist(section, item_name, checked, newQuantity, checked_by);
             });
         });
