@@ -127,12 +127,12 @@ def login():
     if 'user' in session:
         return redirect(url_for('user_dashboard'))
     elif request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
-        if username == ADMIN_USER and password == ADMIN_PASSWORD:
+        username = request.form.get('username').strip()
+        password = request.form.get('password').strip()
+        if username == ADMIN_USER.strip() and password == ADMIN_PASSWORD.strip():
             session['user'] = ADMIN_USER
             return redirect(url_for('admin_dashboard'))
-        elif username in userPassword and userPassword[username][0] == password:
+        elif username in userPassword and userPassword[username][0].strip() == password:
             session['user'] = username
             session['initials'] = userPassword[username][1]
             session['error'] = None
@@ -342,7 +342,7 @@ def update_checkbox():
             if item['item_name'] == item_name:
                 if item['checked_by'] == checked_by or not item['checked']:
                     item['checked'] = checked
-                    item['checked_by'] = checked_by if checked else None
+                    item['checked_by'] = checked_by if checked else '--'
                     print(item)
                     session.modified = True
                     break
@@ -369,7 +369,7 @@ def update_quantity():
             if item['item_name'] == item_name:
                 if item['checked_by'] == checked_by or not item['checked']:
                     item['user_quantity'] = new_quantity
-                    item['checked_by'] = checked_by if checked else None
+                    item['checked_by'] = checked_by if checked else '--'
                     print(item)
                     session.modified = True
                     print(item)
@@ -548,7 +548,7 @@ def generate_pdf():
             # Save a copy for the admin
             if not os.path.exists('engineering_sheets'):
                 os.makedirs('engineering_sheets')
-            admin_pdf_path = os.path.join('engineering_sheets', f'Engineering_sheet_{names}_{d1}_{sheetEngine}.pdf')
+            admin_pdf_path = os.path.join('engineering_sheets', f'{sheetEngine}_{names}_{d1}.pdf')
             with open(admin_pdf_path, 'wb') as f:
                 f.write(buffer.getvalue())
 
@@ -557,7 +557,7 @@ def generate_pdf():
                 user_dir = os.path.join('user_sheets', guy)
                 if not os.path.exists(user_dir):
                     os.makedirs(user_dir)
-                user_pdf_path = os.path.join(user_dir, f'Engineering_sheet_{names}_{d1}_{sheetEngine}.pdf')
+                user_pdf_path = os.path.join(user_dir, f'{sheetEngine}_{names}_{d1}.pdf')
                 with open(user_pdf_path, 'wb') as f:
                     f.write(buffer.getvalue())
                 
