@@ -126,7 +126,7 @@
                 <li class="item">
                     <input class="checklist_items" type="checkbox" name="checked_items_{{ section }}_{{ item.item_name }}" 
                         {% if item.checked %}checked{% endif %} 
-                        {% if item.checked_by != session['initials'] or item.checked_by != '--' %}disabled{% endif %} 
+                        {% if item.checked_by not in [session['initials'], '--'] %}disabled{% endif %} 
                         onchange="updateCheckbox('{{ section }}', '{{ item.item_name }}', this.checked)">
                     
                     <div class="quantity-controls">
@@ -137,7 +137,7 @@
                             name="user_quantity_{{ section }}_{{ item.item_name }}" 
                             value="{{ item.user_quantity }}" step="1" 
                             min="0" 
-                            {% if item.checked_by != session['initials'] or item.checked_by != '--' %}disabled{% endif %}
+                            {% if item.checked_by not in [session['initials'], '--'] %}disabled{% endif %}
                             onchange="updateQuantity('{{ section }}', '{{ item.item_name }}', this.value)">
                     </div>
                     
