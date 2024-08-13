@@ -369,7 +369,7 @@ def update_quantity():
             if item['item_name'] == item_name:
                 if item['checked_by'] == checked_by or not item['checked']:
                     item['user_quantity'] = new_quantity
-                    item['checked_by'] = checked_by if checked else '--'
+                    # item['checked_by'] = checked_by if item['checked'] else '--'
                     print(item)
                     session.modified = True
                     print(item)
