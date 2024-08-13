@@ -301,7 +301,7 @@ def engineering_sheet(room_id):
 @login_required
 def get_checklist_items():
     room = session['room']
-    # print(f"\nAS: {active_sessions[room]['checklist_items']}\n")
+    print(f"{active_sessions[room]['checklist_items']['Interior: Driver Seat']}")
     # print(f"SS: {session['checklist_items']}\n")
     return jsonify({'checklist_items': active_sessions[room]['checklist_items']})
 
@@ -343,7 +343,6 @@ def update_checkbox():
                 if item['checked_by'] == checked_by or not item['checked']:
                     item['checked'] = checked
                     item['checked_by'] = checked_by if checked else '--'
-                    print(item)
                     session.modified = True
                     break
                 else:
@@ -367,9 +366,20 @@ def update_quantity():
     if section in session['checklist_items']:
         for item in session['checklist_items'][section]:
             if item['item_name'] == item_name:
+                print(f"BEFORE: {item['checked']}")
                 if item['checked_by'] == checked_by or not item['checked']:
                     item['user_quantity'] = new_quantity
-                    # item['checked_by'] = checked_by if item['checked'] else '--'
+                    if item['checked']:
+                        item['checked_by'] = checked_by
+                        print(f"\n\nCHECKED ITEM: {item}\n\n")
+                    elif not item['checked']:
+                        item['checked_by'] = checked_by
+                        print(f"\n\nUNCHECKED ITEM: {item}\n\n")
+
+                    print(f"AFTER: {item['checked']}")
+                    
+                    if not item['checked'] and item['checked_by'] == checked_by:
+                        item['checked'] = True
                     print(item)
                     session.modified = True
                     print(item)
@@ -382,7 +392,7 @@ def update_quantity():
     # Update the active_sessions entry
     if session['room'] in active_sessions:
         active_sessions[session['room']]['checklist_items'] = session['checklist_items']
-        print(active_sessions[session['room']]['checklist_items'][section])
+        # print(active_sessions[session['room']]['checklist_items'][section])
         socketio.emit('update_checklist', {'checklist_items': session['checklist_items']}, room=session['room'])
     
     return jsonify({'message': 'Quantity updated successfully'})
