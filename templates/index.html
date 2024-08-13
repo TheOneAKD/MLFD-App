@@ -92,33 +92,6 @@
         </div>
     </div>
 
-    <!-- <ul class="checklist">
-        {% for section, items in checklist_items.items() %}
-            <li class="section"><strong>{{ section }}</strong></li>
-            {% for item in items %}
-                <li class="item">
-                    <input class="checklist_items" type="checkbox" name="checked_items_{{ section }}_{{ item.item_name }}" 
-       {% if item.checked %}checked{% endif %} onchange="updateCheckbox('{{ section }}', '{{ item.item_name }}', this.checked)">
-
-                    
-                    <div class="quantity-controls">
-                        <input method="POST" class="quantity-input" type="number"
-                            data-section="{{ section }}" 
-                            data-item-name="{{ item.item_name }}" 
-                            id="user_quantity_{{ section }}_{{ item.item_name }}" 
-                            name="user_quantity_{{ section }}_{{ item.item_name }}" 
-                            value="{{ item.user_quantity }}" step="1" 
-                            min="0" 
-                            onchange="updateQuantity('{{ section }}', '{{ item.item_name }}', this.value)">
-                    </div>            
-                    
-                    <span class="correct-quantity">{{ item.correct_quantity }}</span>
-                    <label for="{{ section }}:{{ item.item_name }}">{{ item.item_name }}</label>
-                </li>
-            {% endfor %}
-        {% endfor %}
-    </ul> -->
-
     <ul class="checklist">
         {% for section, items in checklist_items.items() %}
             <li class="section"><strong>{{ section }}</strong></li>
