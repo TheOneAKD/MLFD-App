@@ -1,5 +1,5 @@
-# import eventlet
-# eventlet.monkey_patch()
+import eventlet
+eventlet.monkey_patch()
 
 from flask import Flask, render_template, send_file, request, redirect, url_for, session, jsonify, make_response, after_this_request
 from flask_socketio import SocketIO, emit, join_room, leave_room
@@ -13,7 +13,7 @@ import copy
 import uuid
 
 app = Flask(__name__)
-socketio = SocketIO(app) # async_mode='eventlet'
+socketio = SocketIO(app, async_mode='eventlet')
 
 app.secret_key = os.urandom(64)
 app.permanent_session_lifetime = timedelta(minutes=30)  # Set session timeout
