@@ -1,5 +1,5 @@
-import eventlet
-eventlet.monkey_patch()
+# import eventlet
+# eventlet.monkey_patch()
 
 from flask import Flask, render_template, send_file, request, redirect, url_for, session, jsonify, make_response, after_this_request
 from flask_socketio import SocketIO, emit, join_room, leave_room
@@ -13,14 +13,14 @@ import copy
 import uuid
 
 app = Flask(__name__)
-socketio = SocketIO(app, async_mode='eventlet')
+socketio = SocketIO(app) # async_mode='eventlet'
 
 app.secret_key = os.urandom(64)
 app.permanent_session_lifetime = timedelta(minutes=30)  # Set session timeout
 
 # Define the admin user
-ADMIN_USER = str(os.environ.get('ADMIN_USER'))
-ADMIN_PASSWORD = str(os.environ.get('ADMIN_PASSWORD'))
+ADMIN_USER = str(os.environ.get('ADMIN_USER', 'ADMIN'))
+ADMIN_PASSWORD = str(os.environ.get('ADMIN_PASSWORD', '9999'))
 
 active_sessions = {} # Used to store sessions
 
@@ -167,9 +167,9 @@ def user_dashboard():
         rooms = list(active_sessions.keys())
         engines = []
     
-        for room_id in list(active_sessions.keys()):
-            if username in active_sessions[room_id]['users']:
-                active_sessions[room_id]['users'].remove(username)
+        # for room_id in list(active_sessions.keys()):
+        #     if username in active_sessions[room_id]['users']:
+        #         active_sessions[room_id]['users'].remove(username)
         
         # for key in list(active_sessions.keys()):
             # print(f"Key: {key} | Engine: {active_sessions[key]['engine']} | Users: {active_sessions[key]['users']}")
@@ -193,8 +193,8 @@ def exit_engineering_sheet():
     username = session['user']
 
     for room_id in list(active_sessions.keys()):
-        if username in active_sessions[room_id]['users']:
-            active_sessions[room_id]['users'].remove(username)
+        if username in active_sessions[room_id]['final_users']:
+            active_sessions[room_id]['final_users'].remove(username)
         if len(active_sessions[room_id]['users']) == 0:
             active_sessions.pop(room_id)
 
@@ -249,6 +249,7 @@ def start_engineering_sheet():
         session['checklist_items'] = copy.deepcopy(items)
         active_sessions[session_id] = {
             'users': [session['user']],
+            'final_users': [session['user']],
             'engine': session['engine'],
             'owner' : session['user'],
             'checklist_items': session["checklist_items"],
@@ -272,6 +273,7 @@ def join_engineering_sheet():
         session['repair_orders'] = active_sessions[join_id]['repair_orders'].get(session['user'], "")
         if session['user'] not in active_sessions[join_id]['users']:
             active_sessions[join_id]['users'].append(session['user'])
+            active_sessions[join_id]['final_users'].append(session['user'])
             # print(f"\nUsers on this sheet are: {active_sessions[join_id]['users']}\n")
         return redirect(url_for('engineering_sheet', engine=active_sessions[join_id]['engine'], room_id=join_id))
     else:
@@ -301,7 +303,7 @@ def engineering_sheet(room_id):
 @login_required
 def get_checklist_items():
     room = session['room']
-    print(f"{active_sessions[room]['checklist_items']['Interior: Driver Seat']}")
+    print(f"\n{active_sessions[room]['checklist_items']['Interior: Driver Seat']}\n")
     # print(f"SS: {session['checklist_items']}\n")
     return jsonify({'checklist_items': active_sessions[room]['checklist_items']})
 
@@ -490,18 +492,23 @@ def serve_user_sheet(filename):
 @login_required
 def generate_pdf():
     data = request.get_json()
+
     room_id = session['room']
+
     repair_orders = active_sessions[session['room']]['repair_orders']
     user_repair_orders = data['repairOrders']
     repair_orders[session['user']] = user_repair_orders
-    active_sessions[session['room']]['repair_orders'] = repair_orders
+
     checklistItems = active_sessions[session['room']]['checklist_items']
+    
     sheetEngine = active_sessions[room_id]['engine']
     d1 = ''.join(date.today().strftime("%d-%m-%Y"))
     active_sessions[room_id]['final_repair_orders'][session['user']] = user_repair_orders
 
     for room_id in list(active_sessions.keys()):
-        if [session['user']] == active_sessions[room_id]['users']:
+        if len(active_sessions[room_id]['final_users']) == 1:
+
+            print(f"\n{session['user']} IS THE LAST PERSON ON THE SHEET!!!\n")
 
             names = ''
             for guy in active_sessions[room_id]['final_repair_orders'].keys():
@@ -533,7 +540,7 @@ def generate_pdf():
                 p.setFont("Helvetica", 12)
                 for item in items:
                     checked_status = '√' if item['checked'] else '×'
-                    p.drawString(100, y, f"{item.get('checked_by', '--')} | {checked_status} -- {item['user_quantity']}/{item['correct_quantity']} : {item['item_name']}")
+                    p.drawString(100, y, f"{item.get('checked_by')} | {checked_status} -- {item['user_quantity']}/{item['correct_quantity']} : {item['item_name']}")
                     y -= 20
                     if y < 40:  # Ensure there's enough space on the page
                         p.showPage()
@@ -570,23 +577,27 @@ def generate_pdf():
                 user_pdf_path = os.path.join(user_dir, f'{sheetEngine}_{names}_{d1}.pdf')
                 with open(user_pdf_path, 'wb') as f:
                     f.write(buffer.getvalue())
-                
+
+            buffer.seek(0)  # Reset buffer to start
+
             # Close room permanently
             room = session.get('room')
+
             if room in active_sessions:
                 socketio.emit('session_ended', room=room)
 
-            # Remove session from active_sessions after submission
-            active_sessions.pop(room)
-
-            buffer.seek(0)  # Reset buffer to start
+            active_sessions.pop(room_id)
+            
 
     # # Remove user for sheet
     # for room_id in list(active_sessions.keys()):
     #         if session['user'] in active_sessions[room_id]['users']:
     #             active_sessions[room_id]['users'].remove(session['user'])
+
+    # if session['user'] in active_sessions[room_id]['final_users']:
+    #     active_sessions[room_id]['final_users'].remove(session['user'])
     
-    return send_file(buffer, as_attachment=True, download_name=f"Engineering_sheet_{d1}_{names}.pdf", mimetype='application/pdf')
+    return redirect(url_for('exit_engineering_sheet'))
 
 # SOCKETIO ***********************************************************************************************************************
 

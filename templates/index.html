@@ -225,7 +225,7 @@
         <textarea id="repair_orders" placeholder="Repair orders..." name="repair_orders" rows="4" cols="50">{{ repair_orders }}</textarea><br><br>
     </form>
 
-    <a href="/exit_engineering_sheet" class="submit-button">
+    <a href="/" class="submit-button">
         <button id="generateTextFile" onclick="generateEngineeringSheet()">Submit Engineering Sheet</button>
     </a>
 
@@ -313,10 +313,10 @@
         }
 
         // Fetch data initially when the page loads
-        fetchChecklistItems();
+        // fetchChecklistItems();
 
         // Fetch data every 1 second (adjust the interval as needed)
-        setInterval(fetchChecklistItems, 1000);  // 1000 milliseconds (1 second)
+        // setInterval(fetchChecklistItems, 1000);  // 1000 milliseconds (1 second)
 
         function updateCheckbox(section, item_name, checked) {
             fetch('/update_checkbox', {
@@ -366,64 +366,64 @@
         }
 
 
-        // Function to update items dropdown based on the selected section
-        function updateItemsToRemove() {
-            const sectionSelect = document.getElementById('remove_section');
-            const itemsSelect = document.getElementById('item_to_remove');
-            const selectedSection = sectionSelect.value;
+        // // Function to update items dropdown based on the selected section
+        // function updateItemsToRemove() {
+        //     const sectionSelect = document.getElementById('remove_section');
+        //     const itemsSelect = document.getElementById('item_to_remove');
+        //     const selectedSection = sectionSelect.value;
             
-            // Clear current items
-            itemsSelect.innerHTML = '<option value="" disabled selected>Select Item to Remove</option>';
+        //     // Clear current items
+        //     itemsSelect.innerHTML = '<option value="" disabled selected>Select Item to Remove</option>';
             
-            // Get checklist items from Flask template
-            const checklistItems = {{ checklist_items | tojson }};
+        //     // Get checklist items from Flask template
+        //     const checklistItems = {{ checklist_items | tojson }};
             
-            // Populate items based on the selected section
-            if (selectedSection in checklistItems) {
-                const items = checklistItems[selectedSection];
-                for (const item of items) {
-                    const option = document.createElement('option');
-                    option.value = item.item_name;
-                    option.textContent = item.item_name;
-                    itemsSelect.appendChild(option);
-                }
-            }
-        }
+        //     // Populate items based on the selected section
+        //     if (selectedSection in checklistItems) {
+        //         const items = checklistItems[selectedSection];
+        //         for (const item of items) {
+        //             const option = document.createElement('option');
+        //             option.value = item.item_name;
+        //             option.textContent = item.item_name;
+        //             itemsSelect.appendChild(option);
+        //         }
+        //     }
+        // }
 
-        function updateItemsToMove() {
-            const previousCategorySelect = document.getElementById('previous_category');
-            const itemsSelect = document.getElementById('item_to_move');
-            const newCategorySelect = document.getElementById('new_category');
-            const selectedSection = previousCategorySelect.value;
+        // function updateItemsToMove() {
+        //     const previousCategorySelect = document.getElementById('previous_category');
+        //     const itemsSelect = document.getElementById('item_to_move');
+        //     const newCategorySelect = document.getElementById('new_category');
+        //     const selectedSection = previousCategorySelect.value;
 
-            // Clear current items and new category options
-            itemsSelect.innerHTML = '<option value="" disabled selected>Select Item to Move</option>';
-            newCategorySelect.innerHTML = '<option value="" disabled selected>Select New Section</option>';
+        //     // Clear current items and new category options
+        //     itemsSelect.innerHTML = '<option value="" disabled selected>Select Item to Move</option>';
+        //     newCategorySelect.innerHTML = '<option value="" disabled selected>Select New Section</option>';
 
-            // Get checklist items from Flask template
-            const checklistItems = {{ checklist_items | tojson }};
+        //     // Get checklist items from Flask template
+        //     const checklistItems = {{ checklist_items | tojson }};
             
-            // Populate items based on the selected section
-            if (selectedSection in checklistItems) {
-                const items = checklistItems[selectedSection];
-                for (const item of items) {
-                    const option = document.createElement('option');
-                    option.value = item.item_name;
-                    option.textContent = item.item_name;
-                    itemsSelect.appendChild(option);
-                }
-            }
+        //     // Populate items based on the selected section
+        //     if (selectedSection in checklistItems) {
+        //         const items = checklistItems[selectedSection];
+        //         for (const item of items) {
+        //             const option = document.createElement('option');
+        //             option.value = item.item_name;
+        //             option.textContent = item.item_name;
+        //             itemsSelect.appendChild(option);
+        //         }
+        //     }
 
-            // Populate new category options excluding the selected previous section
-            for (const section in checklistItems) {
-                if (section !== selectedSection) {
-                    const option = document.createElement('option');
-                    option.value = section;
-                    option.textContent = section;
-                    newCategorySelect.appendChild(option);
-                }
-            }
-        }
+        //     // Populate new category options excluding the selected previous section
+        //     for (const section in checklistItems) {
+        //         if (section !== selectedSection) {
+        //             const option = document.createElement('option');
+        //             option.value = section;
+        //             option.textContent = section;
+        //             newCategorySelect.appendChild(option);
+        //         }
+        //     }
+        // }
 
         // Function to update repair orders
         function updateRepairOrders(repairOrders) {
@@ -437,12 +437,12 @@
             updateRepairOrders(repairOrders);
         });
 
-        socket.on('update_repair_orders', function(data) {
-            if (data.user !== '{{ session["user"] }}') {
-                const repairOrdersTextArea = document.getElementById('repair_orders');
-                repairOrdersTextArea.value += `\n${data.user}: ${data.repair_orders}`;
-            }
-        });
+        // socket.on('update_repair_orders', function(data) {
+        //     if (data.user !== '{{ session["user"] }}') {
+        //         const repairOrdersTextArea = document.getElementById('repair_orders');
+        //         repairOrdersTextArea.value += `\n${data.user}: ${data.repair_orders}`;
+        //     }
+        // });
 
         function generateEngineeringSheet() {
             const repairOrders = document.getElementById('repair_orders').value;
@@ -477,19 +477,19 @@
                     'Content-Type': 'application/json'
                 }
             })
-            .then(response => response.blob())
-            .then(blob => {
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `engineering_sheet_${date}.pdf`;
-                document.body.appendChild(a);
-                a.click();
-                window.URL.revokeObjectURL(url);
-            })
-            .catch(error => {
-                console.error('Error generating PDF:', error);
-            });
+            // .then(response => response.blob())
+            // .then(blob => {
+            //     const url = URL.createObjectURL(blob);
+            //     const a = document.createElement('a');
+            //     a.href = url;
+            //     a.download = `engineering_sheet_${date}.pdf`;
+            //     document.body.appendChild(a);
+            //     a.click();
+            //     window.URL.revokeObjectURL(url);
+            // })
+            // .catch(error => {
+            //     console.error('Error generating PDF:', error);
+            // });
         }
 
     </script>
