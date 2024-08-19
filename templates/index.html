@@ -259,7 +259,8 @@
 
         // Add padding to the bottom when typing in the textarea
         repairOrdersTextarea.addEventListener('focus', () => {
-            body.style.paddingBottom = '200px';
+            body.style.paddingBottom = '350px';
+            window.scrollTo(0, document.body.scrollHeight);
         });
 
         repairOrdersTextarea.addEventListener('blur', () => {
